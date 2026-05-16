@@ -1,0 +1,33 @@
+name: Build and Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # Triggers the action every time you push to the main branch
+
+permissions:
+  contents: write  # Allows the tool to push the built files to the gh-pages branch
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20  # Matches modern Angular versions
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build and Deploy
+        # Replace YOUR_USERNAME and YOUR_REPOSITORY_NAME with your actual GitHub details
+        run: |
+          npx ng deploy --base-href=/YOUR_REPOSITORY_NAME/ --no-silent
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
