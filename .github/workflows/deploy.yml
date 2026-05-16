@@ -25,9 +25,14 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      - name: Build and Deploy
-        # Replace YOUR_USERNAME and YOUR_REPOSITORY_NAME with your actual GitHub details
+      - name: Configure Git Identity
         run: |
-          npx ng deploy --base-href=/YOUR_REPOSITORY_NAME/ --no-silent
+          git config --global user.email "tejasvipatel116@gmail.com"
+          git config --global user.name "TejuPatel116"
+
+      - name: Build and Deploy
+        # Make sure to replace YOUR_REPOSITORY_NAME with your actual GitHub repository name
+        run: |
+          npx ng deploy --base-href=https://tejupatel116.github.io/hbd-app/ --no-silent
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
